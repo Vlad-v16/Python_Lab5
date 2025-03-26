@@ -1,0 +1,100 @@
+import random
+
+# Завдання 1: "Простий код"
+def simple_game():
+    number = random.randint(1, 10)
+    print("Вгадай число від 1 до 10!")
+    while True:
+        guess = int(input("Введіть число: "))
+        if guess > number:
+            print("Менше!")
+        elif guess < number:
+            print("Більше!")
+        else:
+            print("Вітаємо! Ви вгадали!")
+            break
+
+# Завдання 2: "Код із підказками"
+def hint_game():
+    number = random.randint(1, 50)
+    print("Вгадай число від 1 до 50!")
+    while True:
+        guess = int(input("Введіть число: "))
+        diff = abs(number - guess)
+        if guess == number:
+            print("Вітаємо! Ви вгадали!")
+            break
+        elif diff <= 3:
+            print("Дуже близько!")
+        elif diff <= 10:
+            print("Близько!")
+        else:
+            print("Далеко!")
+
+# Завдання 3: "Код без права на помилку"
+def limited_attempts_game():
+    number = random.randint(1, 20)
+    attempts = 3
+    while attempts > 0:
+        guess = int(input(f"Введіть число (залишилось {attempts} спроб): "))
+        if guess == number:
+            print("Вітаємо! Ви вгадали!")
+            return
+        attempts -= 1
+    print(f"Ви програли! Загадане число було {number}")
+
+# Завдання 4: "Таємний PIN-код"
+def pin_game():
+    pin = str(random.randint(1000, 9999))
+    attempts = 5
+    while attempts > 0:
+        guess = input(f"Введіть 4-значний PIN-код (залишилось {attempts} спроб): ")
+        if guess == pin:
+            print("Вітаємо! Ви вгадали PIN!")
+            return
+        correct = sum(1 for x, y in zip(guess, pin) if x == y)
+        print(f"Правильних цифр на місці: {correct}")
+        attempts -= 1
+    print(f"Ви програли! Загаданий PIN-код: {pin}")
+
+# Завдання 5: "Кольоровий код"
+def color_game():
+    colors = ["червоний", "синій", "зелений", "жовтий", "фіолетовий"]
+    secret_color = random.choice(colors)
+    warm = ["червоний", "жовтий"]
+    cold = ["синій", "зелений", "фіолетовий"]
+    attempts = 3
+    while attempts > 0:
+        guess = input(f"Вгадайте колір ({', '.join(colors)}) (залишилось {attempts} спроб): ")
+        if guess == secret_color:
+            print("Вітаємо! Ви вгадали колір!")
+            return
+        print("Колір належить до", "теплих!" if secret_color in warm else "холодних!")
+        attempts -= 1
+    print(f"Ви програли! Загаданий колір був {secret_color}")
+
+# Меню вибору гри
+def main():
+    print("Оберіть гру:")
+    print("1 - Простий код")
+    print("2 - Код із підказками")
+    print("3 - Код без права на помилку")
+    print("4 - Таємний PIN-код")
+    print("5 - Кольоровий код")
+    choice = int(input("Введіть номер гри: "))
+
+    if choice == 1:
+        simple_game()
+    elif choice == 2:
+        hint_game()
+    elif choice == 3:
+        limited_attempts_game()
+    elif choice == 4:
+        pin_game()
+    elif choice == 5:
+        color_game()
+    else:
+        print("Невірний вибір!")
+
+if __name__ == "__main__":
+    main()
